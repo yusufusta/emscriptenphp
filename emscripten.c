@@ -35,6 +35,24 @@ PHP_FUNCTION(js)
 }
 /* }}}*/
 
+/* {{{ string js( [ string $code ] ) */
+PHP_FUNCTION(js2)
+{
+	char *code = "console.log('Hello, world!');";
+	size_t var_len = sizeof("console.log('Hello, world!');") - 1;
+	zend_string *retval;
+
+	ZEND_PARSE_PARAMETERS_START(0, 1)
+		Z_PARAM_OPTIONAL
+		Z_PARAM_STRING(code, var_len)
+	ZEND_PARSE_PARAMETERS_END();
+
+	retval = emscripten_run_script_int(code);
+
+	RETURN_NULL();
+}
+/* }}}*/
+
 /* {{{ PHP_RINIT_FUNCTION */
 PHP_RINIT_FUNCTION(emscripten)
 {
